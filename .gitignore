@@ -9,3 +9,70 @@ buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
+
+
+
+*.updt
+view.dat
+view.stg
+*.copyarea
+copyarea.dat
+*/.cc_loading/*
+.cc_loading/
+*.copyarea.db
+.copyarea.db
+
+
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
+!/.mvn/wrapper/maven-wrapper.jar
+
+
+#Compiled class file
+*.class
+
+#Mobile Tools for Java 
+.mtj.tmp/
+
+#Package Files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+#virtual machine crash logs
+hs_err_pid*
+
+
+#misc
+*.log
+log/
+logs/
+lost+found/
+
+
+
+/.vscode
+.idea/
+*.iml
+
+.project
+.classpath
+.settings
+.settings/
+*/.settings/*
+**/.factorypath
+
+
+.DS_Store
