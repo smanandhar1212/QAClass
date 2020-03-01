@@ -28,6 +28,11 @@ public class MainClass {
 //		
 //		System.out.println(revenueCalculator.getTotalRevenue());
 		RichMan rm = new RichMan();
-		rm.displayMenu();
+		try {
+			rm.inputOutput();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

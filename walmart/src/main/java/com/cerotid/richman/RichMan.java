@@ -1,24 +1,23 @@
 package com.cerotid.richman;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
+import com.cerotid.richman.utilities.FileUtilities;
 import com.cerotid.richman.utilities.Utilities;
 import com.cerotid.walmart.calulators.WalmartRevenueCalculator;
-import com.cerotid.walmart.cars.Camaro;
 import com.cerotid.walmart.cars.Cars;
-import com.cerotid.walmart.cars.Challenger;
-import com.cerotid.walmart.cars.Coupes;
-import com.cerotid.walmart.cars.Hatchback;
-import com.cerotid.walmart.cars.Mustang;
-import com.cerotid.walmart.cars.Sedan;
-import com.cerotid.walmart.cars.Spark;
-import com.cerotid.walmart.cars.Veloster;
 
 public class RichMan {
 
 	List<Cars> myCars = new ArrayList<>();
+	FileUtilities fu = new FileUtilities("/Users/celina/Desktop/input/cars.txt");
 
 	public void setMyCars(List<Cars> myCars) {
 		this.myCars = myCars;
@@ -120,6 +119,55 @@ public class RichMan {
 			wm.tireChange(c);
 			System.out.println(c.getLastTireChangeDate());
 		}
+	}
+
+	public void inputOutput() throws Exception {
+		this.initialize();
+		myCars = fu.read();
+		this.generateReport();
+	}
+
+	public void initialize() throws Exception {
+		List<Cars> tmpCars = new ArrayList<>();
+		Cars car1 = Utilities.getCarBasedOnCarType("Camaro");
+		car1.setColor("Red");
+		Cars car2 = Utilities.getCarBasedOnCarType("Challenger");
+		car2.setColor("Black");
+		tmpCars.add(car1);
+		tmpCars.add(car2);
+		fu.write(tmpCars);
+	}
+
+	public void generateReport() {
+		Set<Class> carTypes = new HashSet<>();
+		Set<String> carColors = new HashSet<>();
+		int androidAutoCount = 0;
+		int carPlayCount = 0;
+		int oilChangeInLast30Days = 0;
+		for (Cars car : myCars) {
+			carTypes.add(car.getClass());
+			carColors.add(car.getColor());
+			if (car.isHasAndroidAuto()) {
+				++androidAutoCount;
+			}
+			if (car.isHasCarPlay()) {
+				++carPlayCount;
+			}
+			if (car.getLastOilChangeDate() != null) {
+				LocalDate today = LocalDate.now();
+				LocalDate before30Day = today.minusDays(30);
+				LocalDate lastOilChangeDate = car.getLastOilChangeDate().toInstant().atZone(ZoneId.systemDefault())
+						.toLocalDate();
+				if (lastOilChangeDate.compareTo(before30Day) >= 0 && lastOilChangeDate.compareTo(today) <= 0) {
+					++oilChangeInLast30Days;
+				}
+			}
+		}
+		System.out.println("Number of car types " + carTypes.size());
+		System.out.println("Number of car colors " + carColors.size());
+		System.out.println("Android Auto count " + androidAutoCount);
+		System.out.println("Car play count " + carPlayCount);
+		System.out.println("Oil change in last 30 days " + oilChangeInLast30Days);
 	}
 
 }
